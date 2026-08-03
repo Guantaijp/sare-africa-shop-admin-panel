@@ -1,0 +1,174 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   SARE brand palette (sare.africa)
+   Fixed hues, identical in both themes. The semantic tokens below reference
+   these, so rebranding means editing this block only.
+   --------------------------------------------------------------------------- */
+:root {
+  --sare-navy-deep: oklch(0.2888 0.087 256.52); /* #082A55 */
+  --sare-navy: oklch(0.3553 0.1047 255.765); /* #0E3B71 - logo, app chrome */
+  --sare-navy-soft: oklch(0.4305 0.119 254.183); /* #17508F */
+  --sare-blue: oklch(0.6093 0.1819 257.292); /* #2F80ED - active nav link */
+  --sare-blue-light: oklch(0.722 0.1476 253.765); /* #5EA8FF */
+  --sare-sky: oklch(0.7409 0.1151 233.318); /* #56B7E8 */
+  --sare-sky-pale: oklch(0.9105 0.0369 235.481); /* #CBE6F7 - hero panel */
+  --sare-amber: oklch(0.7871 0.1471 73.02); /* #F2A93B */
+  --sare-red: oklch(0.6256 0.1933 23.026); /* #E5484D - cart badge */
+}
+
+/* --------------------------------- LIGHT --------------------------------- */
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(1 0 0); /* #FFFFFF */
+  --foreground: oklch(0.2228 0.0519 258.345); /* #0B1B33 */
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2228 0.0519 258.345);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2228 0.0519 258.345);
+
+  --primary: var(--sare-navy);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.954 0.0155 247.99); /* #E8F1FA */
+  --secondary-foreground: var(--sare-navy);
+
+  --muted: oklch(0.9648 0.0086 247.914); /* #EFF4F9 */
+  --muted-foreground: oklch(0.5226 0.0419 256.046); /* #5A6B82 */
+
+  --accent: var(--sare-sky-pale);
+  --accent-foreground: var(--sare-navy);
+
+  --destructive: oklch(0.5847 0.2079 25.058); /* #DC2F35 */
+
+  --border: oklch(0.9134 0.0209 248.057); /* #D8E4F0 */
+  --input: oklch(0.9134 0.0209 248.057);
+  --ring: var(--sare-blue);
+
+  --chart-1: var(--sare-navy);
+  --chart-2: var(--sare-blue);
+  --chart-3: var(--sare-sky);
+  --chart-4: var(--sare-amber);
+  --chart-5: var(--sare-red);
+
+  /* Navy sidebar chrome, mirroring the SARE mobile app. */
+  --sidebar: var(--sare-navy);
+  --sidebar-foreground: oklch(0.9285 0.0236 250.078); /* #DCE9F7 */
+  --sidebar-primary: var(--sare-sky);
+  --sidebar-primary-foreground: oklch(0.2437 0.067 254.889); /* #06203F */
+  --sidebar-accent: var(--sare-navy-soft);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.4251 0.1158 255.726); /* #1C4E8C */
+  --sidebar-ring: var(--sare-sky);
+}
+
+/* --------------------------------- DARK ----------------------------------
+   Same navy hue family, pulled down in lightness. Primary flips to the light
+   brand blue so it stays legible against a dark ground.
+   -------------------------------------------------------------------------- */
+.dark {
+  --background: oklch(0.1903 0.0413 256.483); /* #071426 */
+  --foreground: oklch(0.946 0.016 253.904); /* #E6EEF8 */
+
+  --card: oklch(0.234 0.0524 256.287); /* #0C1E36 */
+  --card-foreground: oklch(0.946 0.016 253.904);
+  --popover: oklch(0.234 0.0524 256.287);
+  --popover-foreground: oklch(0.946 0.016 253.904);
+
+  --primary: var(--sare-blue-light);
+  --primary-foreground: oklch(0.2071 0.0531 253.038); /* #04182F */
+
+  --secondary: oklch(0.3056 0.0648 254.133); /* #16304F */
+  --secondary-foreground: oklch(0.946 0.016 253.904);
+
+  --muted: oklch(0.3056 0.0648 254.133);
+  --muted-foreground: oklch(0.7562 0.0442 253.868); /* #9DB2CC */
+
+  --accent: oklch(0.3576 0.0763 251.87); /* #1B3E63 */
+  --accent-foreground: oklch(0.946 0.016 253.904);
+
+  --destructive: oklch(0.7116 0.1812 22.839); /* #FF6B6B */
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.638 0.1273 251.645); /* #4C8FD6 */
+
+  --chart-1: var(--sare-blue-light);
+  --chart-2: var(--sare-sky);
+  --chart-3: oklch(0.7225 0.1167 179.935); /* #38BDA8 */
+  --chart-4: var(--sare-amber);
+  --chart-5: oklch(0.7116 0.1812 22.839); /* #FF6B6B */
+
+  --sidebar: oklch(0.22 0.0473 254.83); /* #0A1B30 */
+  --sidebar-foreground: oklch(0.946 0.016 253.904);
+  --sidebar-primary: var(--sare-blue-light);
+  --sidebar-primary-foreground: oklch(0.2071 0.0531 253.038);
+  --sidebar-accent: oklch(0.3056 0.0648 254.133);
+  --sidebar-accent-foreground: oklch(0.946 0.016 253.904);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.638 0.1273 251.645);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Brand hues as utilities: bg-sare-navy, text-sare-sky, border-sare-blue... */
+  --color-sare-navy-deep: var(--sare-navy-deep);
+  --color-sare-navy: var(--sare-navy);
+  --color-sare-navy-soft: var(--sare-navy-soft);
+  --color-sare-blue: var(--sare-blue);
+  --color-sare-blue-light: var(--sare-blue-light);
+  --color-sare-sky: var(--sare-sky);
+  --color-sare-sky-pale: var(--sare-sky-pale);
+  --color-sare-amber: var(--sare-amber);
+  --color-sare-red: var(--sare-red);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
