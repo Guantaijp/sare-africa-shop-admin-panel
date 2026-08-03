@@ -1,0 +1,73 @@
+// Seed data for the UI prototype. Replace with API calls when the backend lands.
+
+export const LOW_STOCK_THRESHOLD = 10
+
+export const seedShops = [
+  {
+    id: 'shop-1',
+    name: 'Kibera Mart',
+    description: 'Flagship community store serving Kibera and surrounds.',
+    logo: '',
+    location: 'Kibera, Nairobi',
+    createdAt: '2024-06-14',
+  },
+  {
+    id: 'shop-2',
+    name: 'Mathare Store',
+    description: 'Household essentials and dry goods at wholesale prices.',
+    logo: '',
+    location: 'Mathare, Nairobi',
+    createdAt: '2024-08-02',
+  },
+  {
+    id: 'shop-3',
+    name: 'Maasai Shop',
+    description: 'Fresh produce, grains and cooking staples.',
+    logo: '',
+    location: 'Kajiado',
+    createdAt: '2024-11-21',
+  },
+  {
+    id: 'shop-4',
+    name: 'Kawangware Depot',
+    description: 'Bulk distribution point for the western corridor.',
+    logo: '',
+    location: 'Kawangware, Nairobi',
+    createdAt: '2025-02-09',
+  },
+  {
+    id: 'shop-5',
+    name: 'Mukuru Outlet',
+    description: 'Neighbourhood outlet focused on personal care.',
+    logo: '',
+    location: 'Mukuru, Nairobi',
+    createdAt: '2025-05-30',
+  },
+]
+
+export const seedProducts = [
+  { id: 'p-1', name: 'Maize Flour 2kg', shopId: 'shop-1', price: 180, stock: 240, image: '', sku: 'SAR-1001', category: 'Staples' },
+  { id: 'p-2', name: 'Cooking Oil 1L', shopId: 'shop-1', price: 320, stock: 8, image: '', sku: 'SAR-1002', category: 'Staples' },
+  { id: 'p-3', name: 'Rice 5kg', shopId: 'shop-1', price: 890, stock: 64, image: '', sku: 'SAR-1003', category: 'Staples' },
+  { id: 'p-4', name: 'Sugar 1kg', shopId: 'shop-1', price: 165, stock: 0, image: '', sku: 'SAR-1004', category: 'Staples' },
+  { id: 'p-5', name: 'Bar Soap 800g', shopId: 'shop-2', price: 210, stock: 132, image: '', sku: 'SAR-1005', category: 'Household' },
+  { id: 'p-6', name: 'Washing Powder 1kg', shopId: 'shop-2', price: 275, stock: 46, image: '', sku: 'SAR-1006', category: 'Household' },
+  { id: 'p-7', name: 'Tea Leaves 500g', shopId: 'shop-2', price: 340, stock: 5, image: '', sku: 'SAR-1007', category: 'Beverages' },
+  { id: 'p-8', name: 'Milk 500ml', shopId: 'shop-3', price: 60, stock: 310, image: '', sku: 'SAR-1008', category: 'Dairy' },
+  { id: 'p-9', name: 'Beans 2kg', shopId: 'shop-3', price: 420, stock: 78, image: '', sku: 'SAR-1009', category: 'Staples' },
+  { id: 'p-10', name: 'Salt 500g', shopId: 'shop-3', price: 45, stock: 0, image: '', sku: 'SAR-1010', category: 'Staples' },
+  { id: 'p-11', name: 'Tomato Paste 400g', shopId: 'shop-3', price: 130, stock: 92, image: '', sku: 'SAR-1011', category: 'Canned' },
+  { id: 'p-12', name: 'Toothpaste 140g', shopId: 'shop-4', price: 195, stock: 54, image: '', sku: 'SAR-1012', category: 'Personal care' },
+  { id: 'p-13', name: 'Sanitary Pads 10s', shopId: 'shop-4', price: 150, stock: 9, image: '', sku: 'SAR-1013', category: 'Personal care' },
+  { id: 'p-14', name: 'Charcoal 4kg', shopId: 'shop-4', price: 520, stock: 27, image: '', sku: 'SAR-1014', category: 'Fuel' },
+  { id: 'p-15', name: 'Wheat Flour 2kg', shopId: 'shop-4', price: 230, stock: 188, image: '', sku: 'SAR-1015', category: 'Staples' },
+  { id: 'p-16', name: 'Body Lotion 400ml', shopId: 'shop-4', price: 460, stock: 3, image: '', sku: 'SAR-1016', category: 'Personal care' },
+  { id: 'p-17', name: 'Matches 10pk', shopId: 'shop-1', price: 30, stock: 420, image: '', sku: 'SAR-1017', category: 'Household' },
+  { id: 'p-18', name: 'Baking Flour 1kg', shopId: 'shop-2', price: 140, stock: 61, image: '', sku: 'SAR-1018', category: 'Staples' },
+  { id: 'p-19', name: 'Drinking Water 5L', shopId: 'shop-3', price: 210, stock: 145, image: '', sku: 'SAR-1019', category: 'Beverages' },
+  { id: 'p-20', name: 'Dish Soap 750ml', shopId: 'shop-2', price: 185, stock: 0, image: '', sku: 'SAR-1020', category: 'Household' },
+  { id: 'p-21', name: 'Peanut Butter 400g', shopId: 'shop-1', price: 385, stock: 34, image: '', sku: 'SAR-1021', category: 'Spreads' },
+  { id: 'p-22', name: 'Instant Coffee 100g', shopId: 'shop-2', price: 610, stock: 7, image: '', sku: 'SAR-1022', category: 'Beverages' },
+  { id: 'p-23', name: 'Spaghetti 500g', shopId: 'shop-3', price: 125, stock: 96, image: '', sku: 'SAR-1023', category: 'Staples' },
+  { id: 'p-24', name: 'Shampoo 200ml', shopId: 'shop-4', price: 350, stock: 41, image: '', sku: 'SAR-1024', category: 'Personal care' },
+]
