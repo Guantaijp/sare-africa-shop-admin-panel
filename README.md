@@ -9,11 +9,16 @@ API reading from `db.json`.
 
 ## Live demo
 
-> **Not yet deployed.** The front end is a static bundle and will deploy to
-> Vercel/Netlify as-is, but the mock API has to be hosted separately before a
-> deployed build has anything to talk to — see
-> [Known limitations](#known-limitations). Once the API is hosted, set
-> `VITE_API_URL` on the host and add the URL here.
+**https://sare-africa-shop-admin-panel.vercel.app**
+
+Sign in with the [demo credentials](#demo-credentials) below.
+
+JSON Server is a dev process, so there is no server behind the deployed build.
+Instead, [Mock Service Worker](https://mswjs.io) intercepts the same REST calls
+in the browser and answers them from a copy of `db.json` — so create, edit and
+delete all work on the live demo. Each visitor gets their own sandbox, persisted
+to `localStorage`; clearing site data resets it to the seed. Local development
+is unaffected and still talks to the real JSON Server.
 
 ## Technologies used
 
@@ -30,7 +35,8 @@ API reading from `db.json`.
 | Charts            | Recharts                      | Dashboard stock-status and top-shops charts                                     |
 | Notifications     | Sonner                        | Success/error toasts after every write                                          |
 | Icons             | lucide-react                  | Consistent icon set                                                             |
-| Mock API          | JSON Server 1.0 (beta)        | Full REST over `db.json`, as suggested in the brief                             |
+| Mock API (dev)    | JSON Server 1.0 (beta)        | Full REST over `db.json`, as suggested in the brief                             |
+| Mock API (demo)   | Mock Service Worker           | Serves the deployed build, where a dev process can't run                        |
 | Tooling           | ESLint 10, typescript-eslint  | `pnpm lint` and `pnpm typecheck` both run clean                                 |
 
 ## Getting started
@@ -106,7 +112,7 @@ Only one, and it has a working default:
 
 | Variable       | Default                 | Purpose                    |
 | -------------- | ----------------------- | -------------------------- |
-| `VITE_API_URL` | `http://localhost:4000` | Base URL of the mock API   |
+| `VITE_API_URL` | `http://localhost:4000` in dev, `/api` in the production build (`.env.production`) | Base URL the app calls |
 
 Create a `.env.local` to point at a hosted API instead:
 
@@ -174,6 +180,7 @@ src/
     shared/       image picker, pagination, loading/error states
   pages/          one component per route
   hooks/          cross-cutting hooks (theme, URL filter state)
+  mocks/          MSW handlers + seeded store (production build only)
   lib/            api client, formatters, constants
   types/          shared domain types
 ```
@@ -200,6 +207,10 @@ shared as a link, and works with the back button.
   so `login()` fetches the user by email and compares the password in the
   browser (`src/features/auth/auth-api.ts`). The password is stripped before the
   user reaches state or storage, but this is a mock, not authentication.
+- **The deployed demo mocks the network, not the app.** Requests are intercepted
+  by a service worker, so `src/features/**` issues the same axios calls in both
+  environments and knows nothing about MSW. Swapping in a real API is a matter
+  of pointing `VITE_API_URL` at it and deleting `src/mocks/`.
 - **Both seeded users are full administrators.** `role` is stored and displayed
   in the sidebar, but nothing is gated on it — the brief describes one
   administrator persona, so a manager can do everything an admin can.
@@ -244,11 +255,13 @@ shared as a link, and works with the back button.
   and manual testing of each flow.
 - **The bundle is a single ~1 MB chunk** (~313 kB gzipped). No route-level code
   splitting yet; Recharts is the bulk of it.
-- **The mock API is not deployable as-is.** JSON Server is a dev process, not a
-  static asset, so a live deployment needs the API hosted separately (a small
-  Render/Railway service, a serverless function over `db.json`, or MSW running
-  in the browser) plus SPA rewrite rules so deep links like `/shops/shop-1`
-  don't 404 on refresh.
+- **The live demo has no real server.** JSON Server can't run on static hosting,
+  so the deployed build is backed by Mock Service Worker instead. Every REST
+  call the app makes is genuine — it is intercepted at the network layer, not
+  stubbed in application code — but data is per-browser and never leaves the
+  visitor's machine. Local development runs against the real JSON Server.
+- **MSW adds ~160 kB gzipped** to the deployed build. It is a separate chunk
+  loaded only in production, but it is real weight on a demo.
 - **Last write wins.** There is no conflict handling if two tabs edit the same
   record.
 
@@ -256,23 +269,24 @@ shared as a link, and works with the back button.
 
 Roughly in the order I would tackle them:
 
-1. **Deploy it.** Host the API, set `VITE_API_URL`, add `vercel.json` rewrites,
-   and fill in the live demo link above.
-2. **A real backend.** Token auth with an httpOnly refresh cookie, hashed
-   passwords, and the shop-deletion rule moved server-side where it can't be
-   bypassed.
-3. **Tests.** Vitest + Testing Library over the form schemas and route guards,
+1. **A real backend**, replacing both mocks. Token auth with an httpOnly refresh
+   cookie, hashed passwords, and the shop-deletion rule moved server-side where
+   it can't be bypassed. The swap points are `src/features/*/\*-api.ts` and the
+   axios instance in `src/lib/api.ts`; `VITE_API_URL` already points the build
+   anywhere.
+2. **Tests.** Vitest + Testing Library over the form schemas and route guards,
    and a Playwright pass over the create → edit → delete flows for both
-   entities.
-4. **Server-side querying and pagination**, so the product list scales past a
+   entities. The MSW handlers already written for the demo would be reused as
+   the test fixtures.
+3. **Server-side querying and pagination**, so the product list scales past a
    few dozen rows.
-5. **Optimistic updates with rollback** on the mutations, for instant feedback.
-6. **Route-level code splitting** — lazy-load the dashboard so Recharts is not
+4. **Optimistic updates with rollback** on the mutations, for instant feedback.
+5. **Route-level code splitting** — lazy-load the dashboard so Recharts is not
    in the initial bundle.
-7. **Real image uploads** to object storage instead of pasted URLs.
-8. **Role-based permissions**, making `manager` read-only now that the role is
+6. **Real image uploads** to object storage instead of pasted URLs.
+7. **Role-based permissions**, making `manager` read-only now that the role is
    already modelled.
-9. **A product detail page**, plus bulk actions and CSV export for stock takes.
+8. **A product detail page**, plus bulk actions and CSV export for stock takes.
 
 ## Notes
 
