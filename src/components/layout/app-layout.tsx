@@ -5,13 +5,13 @@ import {
   LogOut,
   Menu,
   Moon,
-  Search,
   ShoppingBag,
   Sun,
 } from 'lucide-react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
+import { GlobalSearch } from '@/components/layout/global-search'
 import { SidebarNav } from '@/components/layout/sidebar-nav'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -23,7 +23,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import {
   Sheet,
@@ -166,14 +165,7 @@ export function AppLayout() {
               </SheetContent>
             </Sheet>
 
-            <div className="relative w-full max-w-sm">
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search shops or products"
-                className="h-10 rounded-full bg-muted/60 pl-9"
-                aria-label="Global search"
-              />
-            </div>
+            <GlobalSearch />
 
             <div className="ml-auto flex items-center gap-2">
               <Button

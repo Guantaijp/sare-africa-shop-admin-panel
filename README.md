@@ -148,6 +148,11 @@ pagination. Search and filter state is held in the URL, so a filtered view
 survives a reload and can be shared as a link. The form previews an image as
 soon as a URL is entered.
 
+**Global search** — the top bar searches shops and products together, grouped by
+type and navigable with the arrow keys. Picking a shop opens its detail page;
+picking a product opens the product list filtered to it. It reads from the same
+query cache the pages use, so it costs no extra request.
+
 **Throughout** — skeleton loading states, empty states that distinguish "nothing
 yet" from "nothing matches your filters", retryable error states, confirmation
 dialogs before destructive actions, disabled submit buttons while a request is
@@ -163,7 +168,7 @@ src/
     inventory/    REST calls + TanStack Query hooks for shops & products
   components/
     ui/           shadcn/ui primitives (generated — do not hand-edit)
-    layout/       app shell: sidebar, top bar, page header
+    layout/       app shell: sidebar, top bar, global search, page header
     shops/        shop form + delete dialogs
     products/     product table, form + delete dialogs
     shared/       image picker, pagination, loading/error states
