@@ -214,9 +214,10 @@ shared as a link, and works with the back button.
 - **Both seeded users are full administrators.** `role` is stored and displayed
   in the sidebar, but nothing is gated on it — the brief describes one
   administrator persona, so a manager can do everything an admin can.
-- **Low stock means 10 units or fewer**, set in `src/lib/constants.ts`. The brief
-  suggests a 1–5 band for the bonus chart; 10 was chosen to make the alert list
-  meaningful against the seed data. It is one constant to change.
+- **Stock bands follow the brief**: out of stock at 0, low stock at 1–5, in stock
+  above 5. The boundary is a single constant (`LOW_STOCK_THRESHOLD` in
+  `src/lib/constants.ts`) that the badges, the dashboard chart and the alert
+  list all read from.
 - **Prices are whole Kenyan shillings.** Currency is hardcoded to KES and inputs
   step by 1; there is no multi-currency or decimal support.
 - **Images are URLs, not uploads.** JSON Server stores JSON, so both the shop
