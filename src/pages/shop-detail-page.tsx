@@ -63,7 +63,8 @@ export default function ShopDetailPage() {
       (p) =>
         p.name.toLowerCase().includes(q) ||
         p.sku?.toLowerCase().includes(q) ||
-        p.category?.toLowerCase().includes(q),
+        p.category?.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q),
     )
   }, [shopProducts, query])
 

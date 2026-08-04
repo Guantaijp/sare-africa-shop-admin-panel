@@ -17,6 +17,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import {
   useCreateProduct,
   useInventory,
@@ -44,11 +46,15 @@ const productSchema = z.object({
   shopId: z.string().min(1, 'Choose the shop this product belongs to.'),
   price: z
     .number({ error: 'Price is required.' })
-    .min(0, 'Enter a price of 0 or more.'),
+    .gt(0, 'Price must be greater than zero.'),
   stock: z
     .number({ error: 'Stock is required.' })
     .int('Enter a whole number of units.')
-    .min(0, 'Enter a stock of 0 or more.'),
+    .min(0, 'Stock cannot be negative.'),
+  description: z
+    .string()
+    .trim()
+    .max(300, 'Keep the description under 300 characters.'),
   sku: z.string().trim(),
   category: z.string().trim(),
   image: z.string(),
@@ -83,8 +89,11 @@ function ProductForm({
     defaultValues: {
       name: product?.name ?? '',
       shopId: product?.shopId ?? defaultShopId ?? '',
-      price: product?.price ?? 0,
+      // Zero is no longer a valid price, so a new product starts with an empty
+      // field rather than a pre-filled value the user has to clear.
+      price: product?.price ?? NaN,
       stock: product?.stock ?? 0,
+      description: product?.description ?? '',
       sku: product?.sku ?? '',
       category: product?.category ?? '',
       image: product?.image ?? '',
@@ -112,6 +121,7 @@ function ProductForm({
   // memoize — form.watch() returns a function the compiler must bail out on.
   const price = useWatch({ control: form.control, name: 'price' })
   const stock = useWatch({ control: form.control, name: 'stock' })
+  const description = useWatch({ control: form.control, name: 'description' }) ?? ''
   const stockValue = price > 0 && stock > 0 ? formatCurrency(price * stock) : null
   const isSaving = form.formState.isSubmitting
 
@@ -196,8 +206,9 @@ function ProductForm({
                   <FormControl>
                     <Input
                       type="number"
-                      min="0"
+                      min="1"
                       step="1"
+                      placeholder="e.g. 180"
                       value={Number.isNaN(field.value) ? '' : field.value}
                       onChange={(e) =>
                         field.onChange(
@@ -272,6 +283,29 @@ function ProductForm({
               )}
             />
           </div>
+
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="What is this product?"
+                    rows={3}
+                    {...field}
+                  />
+                </FormControl>
+                <div className="flex justify-between gap-3">
+                  <FormMessage />
+                  <FormDescription className="tabular-nums">
+                    {description.length}/300
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
 
           {stockValue && (
             <div className="flex items-center justify-between rounded-lg bg-muted px-3 py-2 text-sm">

@@ -74,6 +74,7 @@
       "shopId": "shop-1",
       "price": 180,
       "stock": 240,
+      "description": "Finely milled white maize meal for ugali and porridge. Sold in a sealed 2kg pack.",
       "image": "",
       "sku": "SAR-1001",
       "category": "Staples"
@@ -84,6 +85,7 @@
       "shopId": "shop-1",
       "price": 320,
       "stock": 8,
+      "description": "Refined vegetable cooking oil in a 1L bottle. Suitable for frying and general cooking.",
       "image": "",
       "sku": "SAR-1002",
       "category": "Staples"
@@ -94,6 +96,7 @@
       "shopId": "shop-1",
       "price": 890,
       "stock": 64,
+      "description": "Long-grain aromatic rice in a 5kg bag. Household staple with a low breakage rate.",
       "image": "",
       "sku": "SAR-1003",
       "category": "Staples"
@@ -104,6 +107,7 @@
       "shopId": "shop-1",
       "price": 165,
       "stock": 0,
+      "description": "Granulated white table sugar, 1kg pack. Everyday sweetener for tea and baking.",
       "image": "",
       "sku": "SAR-1004",
       "category": "Staples"
@@ -114,6 +118,7 @@
       "shopId": "shop-2",
       "price": 210,
       "stock": 132,
+      "description": "Multipurpose 800g laundry bar soap. Works on hand washing and general cleaning.",
       "image": "",
       "sku": "SAR-1005",
       "category": "Household"
@@ -124,6 +129,7 @@
       "shopId": "shop-2",
       "price": 275,
       "stock": 46,
+      "description": "High-foam washing powder for hand and machine wash. 1kg refill pack.",
       "image": "",
       "sku": "SAR-1006",
       "category": "Household"
@@ -134,6 +140,7 @@
       "shopId": "shop-2",
       "price": 340,
       "stock": 5,
+      "description": "Loose black tea leaves, 500g pack. Strong brew suited to milk tea.",
       "image": "",
       "sku": "SAR-1007",
       "category": "Beverages"
@@ -144,6 +151,7 @@
       "shopId": "shop-3",
       "price": 60,
       "stock": 310,
+      "description": "Pasteurised long-life whole milk in a 500ml carton. No refrigeration needed until opened.",
       "image": "",
       "sku": "SAR-1008",
       "category": "Dairy"
@@ -154,6 +162,7 @@
       "shopId": "shop-3",
       "price": 420,
       "stock": 78,
+      "description": "Dried red kidney beans, 2kg pack. Cleaned and sorted, ready to soak and cook.",
       "image": "",
       "sku": "SAR-1009",
       "category": "Staples"
@@ -164,6 +173,7 @@
       "shopId": "shop-3",
       "price": 45,
       "stock": 0,
+      "description": "Iodised fine table salt in a 500g pack. For cooking and table use.",
       "image": "",
       "sku": "SAR-1010",
       "category": "Staples"
@@ -174,6 +184,7 @@
       "shopId": "shop-3",
       "price": 130,
       "stock": 92,
+      "description": "Concentrated tomato paste in a 400g tin. Base for stews, sauces and rice dishes.",
       "image": "",
       "sku": "SAR-1011",
       "category": "Canned"
@@ -184,6 +195,7 @@
       "shopId": "shop-4",
       "price": 195,
       "stock": 54,
+      "description": "Fluoride toothpaste, 140g tube. Fresh mint flavour with cavity protection.",
       "image": "",
       "sku": "SAR-1012",
       "category": "Personal care"
@@ -194,6 +206,7 @@
       "shopId": "shop-4",
       "price": 150,
       "stock": 9,
+      "description": "Ultra-thin sanitary pads with wings, pack of 10. Cotton-soft top layer.",
       "image": "",
       "sku": "SAR-1013",
       "category": "Personal care"
@@ -204,6 +217,7 @@
       "shopId": "shop-4",
       "price": 520,
       "stock": 27,
+      "description": "Hardwood cooking charcoal in a 4kg bag. Long burn time with low smoke.",
       "image": "",
       "sku": "SAR-1014",
       "category": "Fuel"
@@ -214,6 +228,7 @@
       "shopId": "shop-4",
       "price": 230,
       "stock": 188,
+      "description": "Sifted wheat flour, 2kg pack. For chapati, mandazi and general baking.",
       "image": "",
       "sku": "SAR-1015",
       "category": "Staples"
@@ -224,6 +239,7 @@
       "shopId": "shop-4",
       "price": 460,
       "stock": 3,
+      "description": "Moisturising body lotion with cocoa butter. 400ml pump bottle.",
       "image": "",
       "sku": "SAR-1016",
       "category": "Personal care"
@@ -234,6 +250,7 @@
       "shopId": "shop-1",
       "price": 30,
       "stock": 420,
+      "description": "Safety matches, pack of 10 boxes. Long-stem sticks with a strong strike strip.",
       "image": "",
       "sku": "SAR-1017",
       "category": "Household"
@@ -244,6 +261,7 @@
       "shopId": "shop-2",
       "price": 140,
       "stock": 61,
+      "description": "Self-raising baking flour, 1kg pack. Pre-mixed for cakes and quick breads.",
       "image": "",
       "sku": "SAR-1018",
       "category": "Staples"
@@ -254,6 +272,7 @@
       "shopId": "shop-3",
       "price": 210,
       "stock": 145,
+      "description": "Purified drinking water in a 5L refillable jerrycan. Sealed at the plant.",
       "image": "",
       "sku": "SAR-1019",
       "category": "Beverages"
@@ -264,6 +283,7 @@
       "shopId": "shop-2",
       "price": 185,
       "stock": 0,
+      "description": "Concentrated dishwashing liquid, 750ml. Cuts grease and rinses clean.",
       "image": "",
       "sku": "SAR-1020",
       "category": "Household"
@@ -274,6 +294,7 @@
       "shopId": "shop-1",
       "price": 385,
       "stock": 34,
+      "description": "Smooth roasted peanut butter, 400g jar. No added palm oil.",
       "image": "",
       "sku": "SAR-1021",
       "category": "Spreads"
@@ -284,6 +305,7 @@
       "shopId": "shop-2",
       "price": 610,
       "stock": 7,
+      "description": "Freeze-dried instant coffee granules, 100g jar. Medium roast, dissolves quickly.",
       "image": "",
       "sku": "SAR-1022",
       "category": "Beverages"
@@ -294,6 +316,7 @@
       "shopId": "shop-3",
       "price": 125,
       "stock": 96,
+      "description": "Durum wheat spaghetti, 500g pack. Cooks in 8 minutes and holds its bite.",
       "image": "",
       "sku": "SAR-1023",
       "category": "Staples"
@@ -304,6 +327,7 @@
       "shopId": "shop-4",
       "price": 350,
       "stock": 41,
+      "description": "Gentle daily shampoo for all hair types, 200ml. Free of added parabens.",
       "image": "",
       "sku": "SAR-1024",
       "category": "Personal care"

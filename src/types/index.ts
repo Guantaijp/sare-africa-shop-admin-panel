@@ -30,6 +30,7 @@ export interface Product {
   shopId: string
   price: number
   stock: number
+  description: string
   image: string
   sku: string
   category: string

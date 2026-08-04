@@ -93,6 +93,11 @@ export function ProductsTable({
                           .filter(Boolean)
                           .join(' · ') || '—'}
                       </p>
+                      {product.description && (
+                        <p className="mt-0.5 line-clamp-1 max-w-[36ch] text-xs text-muted-foreground/80">
+                          {product.description}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </TableCell>

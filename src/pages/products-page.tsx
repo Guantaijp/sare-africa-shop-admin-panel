@@ -67,6 +67,7 @@ export default function ProductsPage() {
         product.name.toLowerCase().includes(q) ||
         product.sku?.toLowerCase().includes(q) ||
         product.category?.toLowerCase().includes(q) ||
+        product.description?.toLowerCase().includes(q) ||
         shopsById[product.shopId]?.name.toLowerCase().includes(q)
       )
     })
