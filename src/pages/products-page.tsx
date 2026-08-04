@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useInventory } from '@/features/inventory/use-inventory'
+import { useFilterParams } from '@/hooks/use-filter-params'
 import { PAGE_SIZE } from '@/lib/constants'
 import type { Product, Shop } from '@/types'
 
@@ -37,13 +38,23 @@ const SORTS: Record<
   },
 }
 
+/** Module scope so the reference stays stable across renders. */
+const FILTER_DEFAULTS = { q: '', shop: 'all', sort: 'price-asc', page: 1 }
+
 export default function ProductsPage() {
   const { products, shops, isLoading, isError, error, refetch } = useInventory()
 
-  const [query, setQuery] = useState('')
-  const [shopFilter, setShopFilter] = useState('all')
-  const [sortKey, setSortKey] = useState<SortKey>('price-asc')
-  const [page, setPage] = useState(1)
+  // Filters live in the URL, so a filtered view survives a reload and can be
+  // shared as a link.
+  const [filters, setFilters, clearFilters] = useFilterParams(FILTER_DEFAULTS)
+  const query = filters.q
+  // Both params are user-editable, so neither is trusted: an unknown sort key
+  // would crash the lookup below, and a stale shop id would leave the select
+  // showing its placeholder.
+  const sortKey = (filters.sort in SORTS ? filters.sort : 'price-asc') as SortKey
+  const shopFilter = shops.some((s) => s.id === filters.shop)
+    ? filters.shop
+    : 'all'
 
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Product | null>(null)
@@ -77,24 +88,17 @@ export default function ProductsPage() {
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
 
   // Clamp during render rather than syncing in an effect: deleting the last
-  // row on the final page would otherwise leave the user on an empty page.
-  const safePage = Math.min(page, pageCount)
+  // row on the final page — or a hand-edited `?page=99` — would otherwise
+  // leave the user on an empty page.
+  const safePage = Math.min(Math.max(filters.page, 1), pageCount)
   const visible = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
   const hasFilters = query !== '' || shopFilter !== 'all'
 
   // Any filter change sends the user back to page 1.
-  const applyQuery = (value: string) => {
-    setQuery(value)
-    setPage(1)
-  }
-  const applyShopFilter = (value: string) => {
-    setShopFilter(value)
-    setPage(1)
-  }
-  const applySort = (value: string) => {
-    setSortKey(value as SortKey)
-    setPage(1)
-  }
+  const applyQuery = (value: string) => setFilters({ q: value, page: 1 })
+  const applyShopFilter = (value: string) => setFilters({ shop: value, page: 1 })
+  const applySort = (value: string) => setFilters({ sort: value, page: 1 })
+  const setPage = (value: number) => setFilters({ page: value })
 
   const openCreate = () => {
     setEditing(null)
@@ -179,14 +183,7 @@ export default function ProductsPage() {
             </Select>
 
             {hasFilters && (
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  setQuery('')
-                  setShopFilter('all')
-                  setPage(1)
-                }}
-              >
+              <Button variant="ghost" onClick={clearFilters}>
                 <X className="size-4" />
                 Clear
               </Button>

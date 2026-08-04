@@ -144,7 +144,9 @@ link through to those products.
 
 **Products** — full CRUD in a table with live search (name, SKU, category,
 description and shop), a shop filter, five sort orders and client-side
-pagination. The form previews an image as soon as a URL is entered.
+pagination. Search and filter state is held in the URL, so a filtered view
+survives a reload and can be shared as a link. The form previews an image as
+soon as a URL is entered.
 
 **Throughout** — skeleton loading states, empty states that distinguish "nothing
 yet" from "nothing matches your filters", retryable error states, confirmation
@@ -166,7 +168,7 @@ src/
     products/     product table, form + delete dialogs
     shared/       image picker, pagination, loading/error states
   pages/          one component per route
-  hooks/          cross-cutting hooks (theme)
+  hooks/          cross-cutting hooks (theme, URL filter state)
   lib/            api client, formatters, constants
   types/          shared domain types
 ```
@@ -182,6 +184,10 @@ Two rules keep the structure predictable:
   computed in the page; the table and dialogs stay presentational and reusable —
   the same `ProductsTable` serves both the products list and the shop detail
   page.
+
+Search, filter, sort and page state is kept in the URL query string by
+`src/hooks/use-filter-params.ts`, so a filtered view survives a reload, can be
+shared as a link, and works with the back button.
 
 ## Assumptions made
 
@@ -226,9 +232,9 @@ Two rules keep the structure predictable:
   server-side querying would be needed.
 - **No optimistic updates.** Mutations invalidate and refetch, so there is a
   brief round-trip before a change appears. Correct, but not instant.
-- **Filter state resets on reload.** Search text, shop filter, sort order and
-  page number live in component state only. (This is the one bonus item that is
-  not implemented; the theme choice *is* persisted.)
+- **Filter state is per-page, not a global preference.** It lives in the URL, so
+  it survives a reload and is shareable, but navigating to another section and
+  back starts clean — there is no stored "last used" filter.
 - **No automated tests.** Verification so far is `pnpm typecheck`, `pnpm lint`
   and manual testing of each flow.
 - **The bundle is a single ~1 MB chunk** (~313 kB gzipped). No route-level code
@@ -253,18 +259,15 @@ Roughly in the order I would tackle them:
 3. **Tests.** Vitest + Testing Library over the form schemas and route guards,
    and a Playwright pass over the create → edit → delete flows for both
    entities.
-4. **Move filter state into the URL.** `?q=&shop=&sort=&page=` would make
-   filtered views shareable and survive a reload, covering the remaining bonus
-   item more usefully than writing to `localStorage`.
-5. **Server-side querying and pagination**, so the product list scales past a
+4. **Server-side querying and pagination**, so the product list scales past a
    few dozen rows.
-6. **Optimistic updates with rollback** on the mutations, for instant feedback.
-7. **Route-level code splitting** — lazy-load the dashboard so Recharts is not
+5. **Optimistic updates with rollback** on the mutations, for instant feedback.
+6. **Route-level code splitting** — lazy-load the dashboard so Recharts is not
    in the initial bundle.
-8. **Real image uploads** to object storage instead of pasted URLs.
-9. **Role-based permissions**, making `manager` read-only now that the role is
+7. **Real image uploads** to object storage instead of pasted URLs.
+8. **Role-based permissions**, making `manager` read-only now that the role is
    already modelled.
-10. **A product detail page**, plus bulk actions and CSV export for stock takes.
+9. **A product detail page**, plus bulk actions and CSV export for stock takes.
 
 ## Notes
 

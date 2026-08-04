@@ -28,6 +28,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { useInventory } from '@/features/inventory/use-inventory'
+import { useFilterParams } from '@/hooks/use-filter-params'
 import {
   formatCompactCurrency,
   formatNumber,
@@ -37,9 +38,13 @@ import {
 } from '@/lib/format'
 import type { Shop } from '@/types'
 
+/** Module scope so the reference stays stable across renders. */
+const FILTER_DEFAULTS = { q: '' }
+
 export default function ShopsPage() {
   const { shops, products, isLoading, isError, error, refetch } = useInventory()
-  const [query, setQuery] = useState('')
+  const [filters, setFilters] = useFilterParams(FILTER_DEFAULTS)
+  const query = filters.q
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Shop | null>(null)
   const [deleting, setDeleting] = useState<Shop | null>(null)
@@ -110,7 +115,7 @@ export default function ShopsPage() {
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => setFilters({ q: e.target.value })}
           placeholder="Search shops"
           className="pl-9"
         />

@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useInventory } from '@/features/inventory/use-inventory'
+import { useFilterParams } from '@/hooks/use-filter-params'
 import { PAGE_SIZE } from '@/lib/constants'
 import {
   formatCompactCurrency,
@@ -36,13 +37,17 @@ import {
 } from '@/lib/format'
 import type { Product, StockStatusKey } from '@/types'
 
+/** Module scope so the reference stays stable across renders. */
+const FILTER_DEFAULTS = { q: '', page: 1 }
+
 export default function ShopDetailPage() {
   const { shopId } = useParams<{ shopId: string }>()
   const navigate = useNavigate()
   const { shops, products, isLoading, isError, error, refetch } = useInventory()
 
-  const [query, setQuery] = useState('')
-  const [page, setPage] = useState(1)
+  const [filters, setFilters] = useFilterParams(FILTER_DEFAULTS)
+  const query = filters.q
+  const setPage = (value: number) => setFilters({ page: value })
   const [shopFormOpen, setShopFormOpen] = useState(false)
   const [shopDeleteOpen, setShopDeleteOpen] = useState(false)
   const [productFormOpen, setProductFormOpen] = useState(false)
@@ -104,7 +109,7 @@ export default function ShopDetailPage() {
   }
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
-  const safePage = Math.min(page, pageCount)
+  const safePage = Math.min(Math.max(filters.page, 1), pageCount)
   const visible = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
 
   return (
@@ -219,10 +224,7 @@ export default function ShopDetailPage() {
               <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value)
-                  setPage(1)
-                }}
+                onChange={(e) => setFilters({ q: e.target.value, page: 1 })}
                 placeholder="Search products"
                 className="pl-9"
                 aria-label="Search products in this shop"
